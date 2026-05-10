@@ -1,8 +1,17 @@
+const fs = require('fs');
+const path = require('path');
 
-# 🗺️ Dokumentasi Otomatis: WEB-GIS-MATARAM
+// 1. Ambil info dari package.json
+const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf-8'));
+
+// 2. Baca Skema Prisma untuk dokumentasi Database
+const prismaSchema = fs.readFileSync('./prisma/schema.prisma', 'utf-8');
+
+const content = `
+# 🗺️ Dokumentasi Otomatis: ${pkg.name.toUpperCase()}
 
 > **Status Proyek**: Terintegrasi dengan GitHub
-> **Terakhir Diperbarui**: 10/5/2026, 15.20.23
+> **Terakhir Diperbarui**: ${new Date().toLocaleString('id-ID')}
 
 ## 🤖 Logika Agen Sistem (Project Agents)
 Dokumentasi ini merangkum seluruh fitur yang telah diimplementasikan:
@@ -13,43 +22,21 @@ Dokumentasi ini merangkum seluruh fitur yang telah diimplementasikan:
 4. **Auto-Routing Engine**: Integrasi rute jalan tercepat secara massal menggunakan OSRM API.
 
 ## 🛠️ Arsitektur Teknologi
-* **Framework**: Next.js (Version: 16.2.6)
+* **Framework**: Next.js (Version: ${pkg.dependencies.next})
 * **Database**: PostgreSQL dengan Prisma ORM
 * **Map Engine**: React-Leaflet & Leaflet
 * **Geospatial Logic**: Turf.js
 
 ## 📊 Struktur Database (Berdasarkan schema.prisma)
-```prisma
-generator client {
-  provider = "prisma-client-js"
-}
-
-datasource db {
-  provider = "postgresql"
-}
-
-model Sekolah {
-  id        String   @id @default(uuid())
-  nama      String
-  alamat    String?
-  kecamatan String?
-  latitude  Float
-  longitude Float
-  createdAt DateTime @default(now())
-}
-
-model Sppg {
-  id        String   @id @default(uuid())
-  nama      String
-  alamat    String?
-  kecamatan String?
-  latitude  Float
-  longitude Float
-  createdAt DateTime @default(now())
-}
-```
+\`\`\`prisma
+${prismaSchema}
+\`\`\`
 
 ## 🚀 Cara Menjalankan (Deployment)
-1. Install Dependensi: `npm install`
-2. Sinkronisasi Database: `npx prisma db push`
-3. Jalankan Server: `npm run dev`
+1. Install Dependensi: \`npm install\`
+2. Sinkronisasi Database: \`npx prisma db push\`
+3. Jalankan Server: \`npm run dev\`
+`;
+
+fs.writeFileSync('./AGENTS.md', content);
+console.log('✅ Dokumentasi AGENTS.md berhasil dibuat 100% sesuai proyek!');
