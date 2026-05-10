@@ -51,5 +51,10 @@ model Sppg {
 
 ## 🚀 Cara Menjalankan (Deployment)
 1. Install Dependensi: `npm install`
-2. Sinkronisasi Database: `npx prisma db push`
-3. Jalankan Server: `npm run dev`
+2. Setup Database: `npx prisma db push npx prisma generate`
+3. Jalankan Seeder `npx tsx prisma/seed.ts`
+4. Jalankan Server: `npm run dev`
+
+## Akun Default Admin
+Username: `admin`
+Password: `admin123`
