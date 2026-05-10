@@ -2,7 +2,8 @@
 
 import { MapContainer, TileLayer, Marker, useMapEvents, useMap, Popup, GeoJSON, LayersControl, ZoomControl } from 'react-leaflet';
 import L from 'leaflet';
-import { useEffect, useState, useRef } from 'react';
+// 1. TAMBAHKAN useRef DISINI
+import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import * as turf from '@turf/turf'; 
 import 'leaflet/dist/leaflet.css';
 import { Crosshair, MapPin, Loader2, Route } from 'lucide-react';
@@ -31,8 +32,9 @@ export default function AdminMap({ markers = [], focusLocation, onLocationSelect
   const routeCache = useRef<Record<string, any>>({});
   const uiRef = useRef<HTMLDivElement>(null);
 
-  const sppgList = markers.filter((m: any) => m.kategori === 'sppg');
-  const sekolahList = markers.filter((m: any) => m.kategori === 'sekolah');
+  // 2. BUNGKUS DENGAN useMemo AGAR REFERENSINYA STABIL
+  const sppgList = useMemo(() => markers.filter((m: any) => m.kategori === 'sppg'), [markers]);
+  const sekolahList = useMemo(() => markers.filter((m: any) => m.kategori === 'sekolah'), [markers]);
 
   // Mencegah klik UI tembus ke peta
   useEffect(() => {
@@ -50,7 +52,8 @@ export default function AdminMap({ markers = [], focusLocation, onLocationSelect
       setActiveSppgIds([]);
       setRouteLines([]);
     }
-  }, [isBufferMode, markers]);
+  // 3. UBAH DEPENDENCY DARI markers MENJADI sppgList
+  }, [isBufferMode, sppgList]);
 
   // ENGINE AUTO-ROUTING (Berjalan otomatis saat radius/SPPG aktif berubah)
   useEffect(() => {

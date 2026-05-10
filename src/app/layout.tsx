@@ -1,22 +1,27 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google'; // Atau font pilihan Anda
+import './globals.css';
+import Navbar from '@/components/Navbar'; // Pastikan path import sesuai
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "GIS SPPG Mataram",
-  description: "Pemetaan SPPG dan Sekolah Kota Mataram",
+  title: 'SIG Mataram - Pemetaan Lokasi',
+  description: 'Sistem Informasi Geografis untuk pemetaan SPPG dan Sekolah di Mataram.',
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="id">
-      <body className={`${inter.className} bg-neutral-100 text-neutral-800 antialiased`}>
+      <body className={inter.className}>
+        {/* Navbar akan mengecek sendiri apakah ia perlu tampil atau sembunyi */}
+        <Navbar /> 
+        
+        {/* Konten Utama (Page) */}
         {children}
       </body>
     </html>

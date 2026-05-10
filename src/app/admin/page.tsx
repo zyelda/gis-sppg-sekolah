@@ -161,6 +161,14 @@ export default function AdminPage() {
     });
   };
 
+  const handleLogout = () => {
+  // Menghapus cookie dengan cara mengatur max-age menjadi 0
+  document.cookie = "is_admin=; path=/; max-age=0";
+  
+  // Arahkan kembali ke halaman login
+  window.location.href = '/login'; 
+};
+
   const handleCsvChange = (tempId: string, field: string, value: any) => {
     setCsvPreview(prev => prev?.map(row => 
       row._tempId === tempId ? { ...row, [field]: value } : row
@@ -233,6 +241,12 @@ export default function AdminPage() {
           <div className="pt-4 border-t border-neutral-100 mt-4">
             <MenuBtn active={activeMenu === 'tambah'} onClick={() => { resetForm(); setActiveMenu('tambah'); setActiveTab('manual'); }} icon={<Plus size={18}/>} label="Tambah Data" />
           </div>
+                <button 
+        onClick={handleLogout}
+        className="w-full flex items-center gap-3 px-4 py-3 mt-auto rounded-xl text-sm font-medium text-red-500 hover:bg-red-50 hover:text-red-600 transition-all"
+      >
+        Keluar (Logout)
+      </button>
         </nav>
       </aside>
 
