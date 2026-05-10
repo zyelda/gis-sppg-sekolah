@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Sekolah {
+  id        String   @id @default(uuid())
+  nama      String
+  alamat    String?
+  kecamatan String?
+  latitude  Float
+  longitude Float
+  createdAt DateTime @default(now())
+}
+
+model Sppg {
+  id        String   @id @default(uuid())
+  nama      String
+  alamat    String?
+  kecamatan String?
+  latitude  Float
+  longitude Float
+  createdAt DateTime @default(now())
+}

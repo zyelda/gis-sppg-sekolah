@@ -1,26 +1,25 @@
+/* 1. Sintaks baru untuk Tailwind v4 */
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* 2. Mengimpor CSS bawaan peta Leaflet */
+@import 'leaflet/dist/leaflet.css';
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* 3. Kelas khusus untuk efek glassmorphism / blur */
+@layer components {
+  .glass-panel {
+    @apply bg-white/40 backdrop-blur-md border border-white/50 shadow-lg rounded-xl;
+  }
+  .glass-input {
+    @apply bg-white/50 backdrop-blur-sm border border-neutral-300 text-neutral-800 rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-neutral-500 transition-all;
+  }
+  .glass-button {
+    @apply bg-neutral-800/90 hover:bg-neutral-900 text-white backdrop-blur-sm px-4 py-2 rounded-lg transition-all flex items-center justify-center gap-2;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* 4. Menerapkan warna dasar ke body */
+@layer base {
+  body {
+    @apply bg-neutral-100 text-neutral-800;
+  }
 }
